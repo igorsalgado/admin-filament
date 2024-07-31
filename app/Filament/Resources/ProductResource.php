@@ -44,8 +44,10 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name'),
-                TextColumn::make('price')->money('BRL'),
+                TextColumn::make('name')->sortable(),
+                TextColumn::make('price')
+                    ->sortable()
+                    ->money('BRL'),
                 TextColumn::make('amount'),
                 TextColumn::make('created_at')->date('d/m/y H:i:s')
             ])
@@ -57,7 +59,8 @@ class ProductResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
-            ]);
+            ])
+            ->defaultSort('amount', 'DESC');
     }
 
     public static function getRelations(): array
